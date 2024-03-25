@@ -15,7 +15,8 @@ app.use(cors({
 
 app.get("/", (req, res)  => {
     res.json({
-        message: "Library API"
+        message: "Library API",
+        p: process.env.MONGODB_URI
     })
 })
 

@@ -1,4 +1,5 @@
 const User = require("../models/user.model");
+const { registerErrorHandler } = require("../utils/apiHelpers");
 
 
 async function registerUser(req, res){
@@ -9,9 +10,7 @@ async function registerUser(req, res){
             message: "User has registered"
         })
     } catch (error) {
-        res.status(500).json({
-            message: error.message
-        })
+        registerErrorHandler(error, res, _user?.email)
     }
 }
 
@@ -29,7 +28,7 @@ async function loginUser(req, res) {
         if(!user) {
             throw new Error("Credentials missing")
         }
-        
+
         res.json(user.toJSON({
             getters: true
         }))

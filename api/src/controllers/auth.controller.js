@@ -1,14 +1,17 @@
 const bcrypt =  require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const User = require("../models/user.model");
 const { registerErrorHandler, userWithoutPassword } = require("../utils/apiHelpers");
+const { generateAccessAndRefreshToken } = require("../utils/authHelpers");
 
 
 async function registerUser(req, res){
     const _user = req.body
     try {
         const user = await User.create(_user)
-        res.json(userWithoutPassword(user))
+        const token = generateAccessAndRefreshToken(user)
+        res.json(token)
     } catch (error) {
         registerErrorHandler(error, res, _user?.email)
     }
@@ -23,7 +26,7 @@ async function loginUser(req, res) {
         const user = await User.findOne({
             email
         }).select(["+password"])
-        
+
         if(!user) {
             throw new Error("Credentials missing")
         }
@@ -31,7 +34,8 @@ async function loginUser(req, res) {
         if(!isPasswordTheSame) {
             throw new Error("Credentials missing")
         }
-        res.json(userWithoutPassword(user))
+        const token = generateAccessAndRefreshToken(user)
+        res.json(token)
 
     } catch (error) {
         res.status(404).json({

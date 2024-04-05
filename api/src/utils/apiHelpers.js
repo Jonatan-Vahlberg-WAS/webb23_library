@@ -56,8 +56,15 @@ function registerErrorHandler(error, res, email = "") {
   });
 }
 
+function userWithoutPassword(user){
+  user = user.toObject()
+  delete user.password
+  return user
+}
+
 module.exports = {
   authorErrorHandler,
   bookErrorHandler,
-  registerErrorHandler
+  registerErrorHandler,
+  userWithoutPassword
 };

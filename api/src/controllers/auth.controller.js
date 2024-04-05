@@ -1,8 +1,7 @@
 const bcrypt =  require("bcrypt");
-const jwt = require("jsonwebtoken");
 
 const User = require("../models/user.model");
-const { registerErrorHandler, userWithoutPassword } = require("../utils/apiHelpers");
+const { registerErrorHandler } = require("../utils/apiHelpers");
 const { generateAccessAndRefreshToken } = require("../utils/authHelpers");
 
 

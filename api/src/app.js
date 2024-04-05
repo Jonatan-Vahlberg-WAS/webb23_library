@@ -3,6 +3,7 @@ const Express = require("express");
 const cors = require("cors");
 const authorRouter = require("./routes/author.route");
 const bookRouter = require("./routes/book.route");
+const authRouter = require("./routes/auth.route");
 
 const app = Express();
 
@@ -20,6 +21,7 @@ app.get("/", (req, res)  => {
     })
 })
 
+app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/authors", authorRouter);
 app.use("/api/v1/books", bookRouter);
 

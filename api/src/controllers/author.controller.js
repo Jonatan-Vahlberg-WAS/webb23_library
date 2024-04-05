@@ -3,6 +3,7 @@ const { authorErrorHandler } = require("../utils/apiHelpers");
 
 async function createAuthor(req, res) {
   try {
+    console.log("created by ", req.userId)
     const _author = req.body;
     const author = await Author.create(_author);
     res.status(201).json(author);

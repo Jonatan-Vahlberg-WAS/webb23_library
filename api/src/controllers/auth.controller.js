@@ -2,7 +2,7 @@ const bcrypt =  require("bcrypt");
 
 const User = require("../models/user.model");
 const { registerErrorHandler } = require("../utils/apiHelpers");
-const { generateAccessAndRefreshToken } = require("../utils/authHelpers");
+const { generateAccessAndRefreshToken } = require("../utils/token");
 
 
 async function registerUser(req, res){

@@ -15,6 +15,6 @@ authorRouter.post("/",authMiddleware, createAuthor);
 authorRouter.get("/", getAuthors);
 authorRouter.get("/:id", getAuthor);
 authorRouter.put("/:id", authMiddleware, updateAuthor);
-authorRouter.delete("/:id", deleteAuthor);
+authorRouter.delete("/:id",authMiddleware, deleteAuthor);
 
 module.exports = authorRouter;

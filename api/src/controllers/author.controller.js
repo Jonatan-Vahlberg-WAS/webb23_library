@@ -42,11 +42,15 @@ async function getAuthor(req, res) {
 async function updateAuthor(req, res) {
   const { id } = req.params;
   const _author = req.body;
+  const createdBy = req.userId
   try {
     if (id !== _author._id) {
       throw new Error("Cast to ObjectId");
     }
-    const updatedAuthor = await Author.findByIdAndUpdate(id, _author, {
+    const updatedAuthor = await Author.findByIdAndUpdate(id, {
+      ..._author,
+      createdBy
+    }, {
         new: true,
         runValidators: true
     });

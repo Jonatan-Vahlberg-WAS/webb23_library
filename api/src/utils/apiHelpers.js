@@ -5,6 +5,7 @@ function authorErrorHandler(error, res) {
     });
   }
   if (error.message.includes("Cast to ObjectId")) {
+    console.log(error.message)
     return res.status(404).json({
       message: "Author not found",
     });

@@ -2,7 +2,7 @@ const bcrypt =  require("bcrypt");
 
 const User = require("../models/user.model");
 const { registerErrorHandler } = require("../utils/apiHelpers");
-const { generateAccessAndRefreshToken } = require("../utils/token");
+const { generateAccessAndRefreshToken, verifyRefreshToken, generateAccessToken } = require("../utils/token");
 
 
 async function registerUser(req, res){
@@ -43,7 +43,34 @@ async function loginUser(req, res) {
     }
 }
 
+async function refreshAccessToken(req, res) {
+    const {
+        refreshToken
+    } = req.body
+    
+    try {
+        const verifiedToken = verifyRefreshToken(refreshToken)
+        console.log(verifiedToken)
+        const user = await User.findById(verifiedToken?.userId)
+        if(!user) {
+            throw new Error("User not authorized");
+        }
+        const newAccessToken = generateAccessToken(user);
+        res.json({
+            access: newAccessToken,
+            refesh: refreshToken
+        })
+
+    } catch (error) {
+        console.warn("Error in verifying 'refresh token'", error.message)
+        res.status(401).json({
+            message: "User not authorized"
+        })
+    }
+}
+
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    refreshAccessToken
 }

@@ -1,0 +1,11 @@
+{
+    "globalSetup": "<rootDir>/api/__tests__/globalSetup.js",
+    "globalTeardown": "<rootDir>/api/__tests__/globalTeardown.js",
+    "setupFilesAfterEnv": ["<rootDir>/api/__tests__/setupTests.js"],
+    "testPathIgnorePatterns": [
+        "<rootDir>/node_modules/",
+        "<rootDir>/api/__tests__/globalSetup.js",
+        "<rootDir>/api/__tests__/globalTeardown.js",
+        "<rootDir>/api/__tests__/setupTests.js"
+    ]
+}

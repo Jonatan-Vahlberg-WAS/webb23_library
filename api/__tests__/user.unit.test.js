@@ -9,6 +9,10 @@ describe("User model tests", function() {
         password: "password123"
     }
 
+    afterEach(async function() {
+        await User.deleteMany();
+    })
+
     it("Creates a user with valid data",async function() {
         const user = await User.create(dummyUser)
 
@@ -41,5 +45,31 @@ describe("User model tests", function() {
         } catch(error) {
             expect(error.message).toMatch("Path `email` is invalid")
         }
+    })
+
+    it("does not create a user with the same email", async function () {
+        const user1 = await User.create(dummyUser)
+        try {
+            const user2 = await User.create(dummyUser)
+        } catch(error) {
+            expect(error.message).toMatch("E11000 duplicate key error collection: test.users")
+        }
+    })
+
+    it("Returns a hashed password when creating a user", async function() {
+        let user = await User.create(dummyUser)
+        
+        expect(user.password).toMatch(/^\$/)
+    })
+
+    it("does not return a password when getting a user", async function() {
+        let user = await User.create(dummyUser)
+        
+        expect(user.password).toBeTruthy()
+
+        user = await User.findById(user._id)
+
+        expect(user.password).not.toBeTruthy()
+
     })
 })

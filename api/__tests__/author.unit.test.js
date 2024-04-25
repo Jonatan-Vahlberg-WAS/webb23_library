@@ -8,12 +8,13 @@ const dummyUser = {
     email: "jhon.doe@email.com",
     password: "password123"
 }
+let user1;
 
 describe('Author model tests', () => {
-    let user1;
+    
     beforeAll(async function() {
         user1 = await User.create(dummyUser)
-    })
+    });
 
     afterEach(async function () {
         await Author.deleteMany();
@@ -21,7 +22,7 @@ describe('Author model tests', () => {
 
     afterAll(async function() {
         await User.deleteMany()
-    })
+    });
 
 
     it('should create a new author', async () => {

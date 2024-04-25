@@ -7,7 +7,7 @@ beforeAll(async () => {
     });
   });
   
-  afterAll(async () => {
-    // put your client disconnection code here, example with mongoose:
-    await mongoose.disconnect();
-  });
+afterAll(async () => {
+  // put your client disconnection code here, example with mongoose:
+  await mongoose.disconnect();
+});
